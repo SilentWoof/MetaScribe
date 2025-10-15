@@ -3,8 +3,13 @@
 # Ignore audio files
 wav/
 
-# Ignore user-generated metadata and session files
-userdocs/
+# Ignore contents of wavs/ and userdocs/, but keep folders
+wavs/*
+!wavs/.gitkeep
+
+userdocs/*
+!userdocs/.gitkeep
+
 
 # Python artifacts
 __pycache__/
