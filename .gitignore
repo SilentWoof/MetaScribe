@@ -1,0 +1,31 @@
+# MetaScribe .gitignore
+
+# Ignore audio files
+wav/
+
+# Ignore user-generated metadata and session files
+userdocs/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment files
+.env
+*.env
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE/project settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and temp files
+*.log
+*.tmp
