@@ -64,7 +64,7 @@ class MetadataBuilder:
         self.frame_preview_button = tk.Frame(self.frame_preview_container)
         self.frame_preview_button.pack(fill="x", pady=(8, 0))
 
-        tk.Label(self.frame_preview, text="📄 Current metadata.csv content:", font=("Verdana", 12, "bold")).pack(anchor="w")
+        tk.Label(self.frame_preview, text="Current metadata.csv content:", font=("Verdana", 12, "bold")).pack(anchor="w")
         self.scrollbar = tk.Scrollbar(self.frame_preview)
         self.scrollbar.pack(side="right", fill="y")
 
@@ -73,7 +73,11 @@ class MetadataBuilder:
         self.text_log.pack(side="left", fill="both", expand=True)
         self.scrollbar.config(command=self.text_log.yview)
 
-        tk.Button(self.frame_preview_button, text="Save Metadata", command=self.save_metadata_file, width=20).pack(anchor="e", padx=10, pady=5)
+        # Left-aligned: Play Previous Audio
+        tk.Button(self.frame_preview_button, text="Play Previous Audio", command=self.play_previous_audio, width=20).pack(side="left", padx=10, pady=5)
+
+        # Right-aligned: Save Metadata
+        tk.Button(self.frame_preview_button, text="Save Metadata", command=self.save_metadata_file, width=20).pack(side="right", padx=10, pady=5)
 
         # === Sentence Builder ===
         self.label_filename = tk.Label(self.master, text="", font=("Verdana", 12, "bold"))
@@ -435,6 +439,30 @@ class MetadataBuilder:
         messagebox.showinfo("Undo Complete", "All filenames restored.")
         self.load_wav_files()
         self.update_display()
+    
+    def play_previous_audio(self):
+        try:
+            if not os.path.exists(METADATA_FILE):
+                raise FileNotFoundError("metadata.csv not found.")
+
+            with open(METADATA_FILE, "r", encoding="utf-8") as f:
+                lines = [line.strip() for line in f if "|" in line]
+
+            if not lines:
+                raise ValueError("No entries found in metadata.csv.")
+
+            last_entry = lines[-1]
+            filename = last_entry.split("|")[0]
+            filepath = os.path.join(WAV_DIR, filename)
+
+            if not os.path.exists(filepath):
+                raise FileNotFoundError(f"Audio file not found: {filepath}")
+
+            winsound.PlaySound(filepath, winsound.SND_FILENAME)
+            print(f"🔁 Playing previous audio: {filename}")
+
+        except Exception as e:
+            messagebox.showerror("Playback Error", f"Could not play previous audio:\n{e}")
 
 if __name__ == "__main__":
     subtitle_lines = parse_srt(SRT_FILE)
