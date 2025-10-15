@@ -13,6 +13,10 @@ METADATA_FILE = os.path.join(USERDOCS_DIR, "metadata.csv")
 SESSION_FILE = os.path.join(USERDOCS_DIR, "session.json")
 WAV_DIR = os.path.join(PROJECT_DIR, "wavs")
 
+# Ensure required folders exist
+os.makedirs(USERDOCS_DIR, exist_ok=True)
+os.makedirs(WAV_DIR, exist_ok=True)
+
 
 def parse_srt(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -69,7 +73,7 @@ class MetadataBuilder:
         self.text_log.pack(side="left", fill="both", expand=True)
         self.scrollbar.config(command=self.text_log.yview)
 
-        tk.Button(self.frame_preview_button, text="💾 Save Metadata", command=self.save_metadata_file, width=20).pack(anchor="e", padx=10, pady=5)
+        tk.Button(self.frame_preview_button, text="Save Metadata", command=self.save_metadata_file, width=20).pack(anchor="e", padx=10, pady=5)
 
         # === Sentence Builder ===
         self.label_filename = tk.Label(self.master, text="", font=("Verdana", 12, "bold"))
