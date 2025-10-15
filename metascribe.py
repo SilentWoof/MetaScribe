@@ -6,12 +6,13 @@ import os
 import winsound
 
 # === CONFIG ===
-PROJECT_DIR = r"D:\Programs\Vocie Model Training"
-SRT_FILE = os.path.join(PROJECT_DIR, "transcript.srt")
-METADATA_FILE = os.path.join(PROJECT_DIR, "metadata.csv")
-SESSION_FILE = os.path.join(PROJECT_DIR, "session.json")
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+USERDOCS_DIR = os.path.join(PROJECT_DIR, "userdocs")
+SRT_FILE = os.path.join(USERDOCS_DIR, "transcript.srt")
+METADATA_FILE = os.path.join(USERDOCS_DIR, "metadata.csv")
+SESSION_FILE = os.path.join(USERDOCS_DIR, "session.json")
 WAV_DIR = os.path.join(PROJECT_DIR, "wavs")
-PREFIX = "AI_A1-"
+
 
 def parse_srt(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
