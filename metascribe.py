@@ -73,8 +73,8 @@ class MetadataBuilder:
         self.text_log.pack(side="left", fill="both", expand=True)
         self.scrollbar.config(command=self.text_log.yview)
 
-        # Left-aligned: Play Previous Audio
-        tk.Button(self.frame_preview_button, text="Play Previous Audio", command=self.play_previous_audio, width=20).pack(side="left", padx=10, pady=5)
+        # Left-aligned: Play Last Audio
+        tk.Button(self.frame_preview_button, text="Play Last Audio", command=self.play_previous_audio, width=20).pack(side="left", padx=10, pady=5)
 
         # Right-aligned: Save Metadata
         tk.Button(self.frame_preview_button, text="Save Metadata", command=self.save_metadata_file, width=20).pack(side="right", padx=10, pady=5)
@@ -86,7 +86,7 @@ class MetadataBuilder:
         self.btn_play = tk.Button(self.master, text="Play Audio", command=self.play_audio, width=15)
         self.btn_play.pack(pady=(0, 10))
 
-        self.frame_added = tk.LabelFrame(self.master, text="📝 Current Audio File Text", font=("Verdana", 12, "bold"),
+        self.frame_added = tk.LabelFrame(self.master, text="📝 Text to assosciate with current audio file", font=("Verdana", 12, "bold"),
                                         padx=10, pady=10, relief="groove", bd=2)
         self.frame_added.pack(fill="x", padx=20, pady=(10, 5))
 
@@ -95,7 +95,7 @@ class MetadataBuilder:
 
         tk.Button(self.frame_added, text="Accept", command=self.finalise_file, width=15).pack(anchor="e", pady=(10, 0))
 
-        self.frame_next = tk.LabelFrame(self.master, text="📥 Text To Process", font=("Verdana", 12, "bold"),
+        self.frame_next = tk.LabelFrame(self.master, text="📥 Text from transcript file", font=("Verdana", 12, "bold"),
                                         padx=10, pady=10, relief="groove", bd=2)
         self.frame_next.pack(fill="x", padx=20, pady=(5, 10))
 
@@ -459,10 +459,9 @@ class MetadataBuilder:
                 raise FileNotFoundError(f"Audio file not found: {filepath}")
 
             winsound.PlaySound(filepath, winsound.SND_FILENAME)
-            print(f"🔁 Playing previous audio: {filename}")
 
         except Exception as e:
-            messagebox.showerror("Playback Error", f"Could not play previous audio:\n{e}")
+            messagebox.showerror("Playback Error", f"Could not play last audio:\n{e}")
 
 if __name__ == "__main__":
     subtitle_lines = parse_srt(SRT_FILE)
