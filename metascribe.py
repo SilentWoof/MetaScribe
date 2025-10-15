@@ -147,7 +147,7 @@ class MetadataBuilder:
                 return self.wav_files[self.index - 1]
         except Exception:
             pass
-        return f"{PREFIX}{self.index:04d}.wav"
+        return f"{self.index:04d}.wav"
 
     def update_display(self):
         current_filename = self.get_current_filename()
